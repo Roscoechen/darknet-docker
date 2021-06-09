@@ -52,4 +52,4 @@ RUN mkdir ~/Downloads && cd ~/Downloads \
     && make \
     && make install \
     && apt install python3-pip \
-    && python3.8 -m pip install pip jupyterlab \
+    && python3.8 -m pip install pip jupyterlab -y \
