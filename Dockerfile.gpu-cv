@@ -51,5 +51,5 @@ RUN mkdir ~/Downloads && cd ~/Downloads \
     && ./configure --enable-shared \
     && make \
     && make install \
-    && apt install python3-pip \
+    && apt-get install python3-pip \
     && python3.8 -m pip install pip jupyterlab -y \
