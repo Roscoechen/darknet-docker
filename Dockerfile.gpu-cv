@@ -43,13 +43,13 @@ RUN apt-get update \
 
 COPY --from=builder /usr/local/bin/darknet /usr/local/bin/darknet
 
-RUN apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget \
-      && cd ~/Downloads \
-      && wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz \
-      && tar -xf Python-3.8.0.tgz \
-      && cd Python-3.8.0 \
-      && ./configure --enable-shared \
-      && make \
-      && make install \
-      && apt install python3-pip \
-      && python3.8 -m pip install pip jupyterlab \
+RUN apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget -y
+RUN cd ~/Downloads \
+    && wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz \
+    && tar -xf Python-3.8.0.tgz \
+    && cd Python-3.8.0 \
+    && ./configure --enable-shared \
+    && make \
+    && make install \
+    && apt install python3-pip \
+    && python3.8 -m pip install pip jupyterlab \
