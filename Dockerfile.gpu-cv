@@ -17,6 +17,46 @@ ENV SOURCE_BRANCH $SOURCE_BRANCH
 ARG SOURCE_COMMIT=unspecified
 ENV SOURCE_COMMIT $SOURCE_COMMIT
 
+RUN apt-get update && apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget libsqlite3-dev vim -y
+RUN mkdir ~/Downloads && cd ~/Downloads \
+    && wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz \
+    && tar -xf Python-3.8.0.tgz \
+    && cd Python-3.8.0 \
+    && ./configure --enable-shared \
+    && make \
+    && make install \
+    && apt-get install python3-pip -y \
+    && python3.8 -m pip install pip jupyterlab \
+
+RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
+    PIP_INSTALL="pip --no-cache-dir install --upgrade --default-timeout=100" && \
+    GIT_CLONE="git clone --depth 10" && \
+
+apt-get install -y \
+        build-essential \
+        cmake && \
+    ln -s /opt/conda/lib/python3.8/site-packages/numpy/core/include/numpy /usr/include/numpy && \
+    $GIT_CLONE --branch 4.4.0 https://github.com/opencv/opencv ~/opencv && \
+    mkdir -p ~/opencv/build && cd ~/opencv/build && \
+    cmake -D CMAKE_BUILD_TYPE=RELEASE \
+          -D CMAKE_INSTALL_PREFIX=/opt/conda \
+          -D WITH_IPP=OFF \
+          -D WITH_CUDA=OFF \
+          -D WITH_OPENCL=OFF \
+          -D BUILD_TESTS=OFF \
+          -D BUILD_PERF_TESTS=OFF \
+          -D BUILD_opencv_python3=ON \
+          -D PYTHON_DEFAULT_EXECUTABLE=/opt/conda/bin/python \
+          -D PYTHON3_NUMPY_INCLUDE_DIRS=/opt/conda/lib/python3.8/site-packages/numpy/core/include \
+          -D PYTHON3_LIBRARIES=/opt/conda/lib/libpython3.8.so \
+          -D PYTHON3_INCLUDE_DIR=/opt/conda/include/python3.8 \
+          -D PYTHON3_EXECUTABLE=/opt/conda/bin/python \
+          -D PYTHON3_PACKAGES_PATH=/opt/conda/lib/python3.8/site-packages \
+          .. && \
+    make -j"$(nproc)" install && \
+    python -c "import cv2; print(cv2.__version__)" && \
+    apt-get remove -y build-essential cmake && \
+
 ARG CONFIG=gpu-cv
 
 RUN git clone https://github.com/AlexeyAB/darknet.git && cd darknet \
@@ -43,13 +83,3 @@ RUN apt-get update \
 
 COPY --from=builder /usr/local/bin/darknet /usr/local/bin/darknet
 
-RUN apt-get update && apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget libsqlite3-dev vim -y
-RUN mkdir ~/Downloads && cd ~/Downloads \
-    && wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz \
-    && tar -xf Python-3.8.0.tgz \
-    && cd Python-3.8.0 \
-    && ./configure --enable-shared \
-    && make \
-    && make install \
-    && apt-get install python3-pip -y \
-    && python3.8 -m pip install pip jupyterlab \
