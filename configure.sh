@@ -65,6 +65,7 @@ case ${tag} in
     enable_opencv
     enable_avx
     enable_openmp
+    enable_libso
     ;;
   "cpu-noopt-cv")
     enable_opencv
@@ -78,6 +79,7 @@ case ${tag} in
     enable_gpu
     enable_cudnn
     enable_opencv
+    enable_libso
     ;;
   "gpu-cc53")
     enable_gpu
