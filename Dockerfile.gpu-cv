@@ -54,17 +54,16 @@ apt-get install -y \
           -D PYTHON3_PACKAGES_PATH=/usr/local/lib/python3.8/site-packages \
           .. && \
     make -j"$(nproc)" install && \
-    python3.8 -c "import cv2; print(cv2.__version__)" && \
-    apt-get remove -y build-essential cmake
+    python3.8 -c "import cv2; print(cv2.__version__)" # && \
+    # apt-get remove -y build-essential cmake
 
 ARG CONFIG=gpu-cv
 
 RUN git clone https://github.com/AlexeyAB/darknet.git && cd darknet \
       && git checkout $SOURCE_BRANCH \
       && git reset --hard $SOURCE_COMMIT \
-      && /tmp/configure.sh $CONFIG 
-#      && /tmp/configure.sh $CONFIG && make \
-#      && cp darknet /usr/local/bin
+      && /tmp/configure.sh $CONFIG && make \
+      && cp darknet /usr/local/bin
       #&& cd .. && rm -rf darknet
 
 FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
