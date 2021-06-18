@@ -76,8 +76,8 @@ case ${tag} in
     enable_cudnn
     ;;
   "gpu-cv")
-    enable_gpu
-    enable_cudnn
+#     enable_gpu
+#     enable_cudnn
     enable_opencv
     enable_libso
     ;;
