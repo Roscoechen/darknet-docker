@@ -26,7 +26,7 @@ RUN mkdir ~/Downloads && cd ~/Downloads \
     && make \
     && make install \
     && apt-get install python3-pip -y \
-    && python3.8 -m pip install pip jupyterlab
+    && python3.8 -m pip install pip jupyterlab numpy
 
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     PIP_INSTALL="pip --no-cache-dir install --upgrade --default-timeout=100" && \
@@ -46,12 +46,12 @@ apt-get install -y \
           -D BUILD_TESTS=OFF \
           -D BUILD_PERF_TESTS=OFF \
           -D BUILD_opencv_python3=ON \
-#          -D PYTHON_DEFAULT_EXECUTABLE=/opt/conda/bin/python \
-#          -D PYTHON3_NUMPY_INCLUDE_DIRS=/opt/conda/lib/python3.8/site-packages/numpy/core/include \
-#          -D PYTHON3_LIBRARIES=/opt/conda/lib/libpython3.8.so \
-#          -D PYTHON3_INCLUDE_DIR=/opt/conda/include/python3.8 \
-#          -D PYTHON3_EXECUTABLE=/opt/conda/bin/python \
-#          -D PYTHON3_PACKAGES_PATH=/opt/conda/lib/python3.8/site-packages \
+          -D PYTHON_DEFAULT_EXECUTABLE=/usr/local/bin/python3 \
+          -D PYTHON3_NUMPY_INCLUDE_DIRS=/usr/local/lib/python3.8/site-packages/numpy/core/include \
+          -D PYTHON3_LIBRARIES=/usr/local/lib/libpython3.8.so \
+          -D PYTHON3_INCLUDE_DIR=/usr/local/include/python3.8 \
+          -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 \
+          -D PYTHON3_PACKAGES_PATH=/usr/local/lib/python3.8/site-packages \
           .. && \
     make -j"$(nproc)" install && \
     python -c "import cv2; print(cv2.__version__)" && \
