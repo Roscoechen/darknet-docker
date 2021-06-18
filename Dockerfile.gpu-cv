@@ -54,7 +54,7 @@ apt-get install -y \
           -D PYTHON3_PACKAGES_PATH=/usr/local/lib/python3.8/site-packages \
           .. && \
     make -j"$(nproc)" install && \
-    python -c "import cv2; print(cv2.__version__)" && \
+    python3.8 -c "import cv2; print(cv2.__version__)" && \
     apt-get remove -y build-essential cmake
 
 ARG CONFIG=gpu-cv
