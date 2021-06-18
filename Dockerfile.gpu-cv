@@ -46,12 +46,12 @@ apt-get install -y \
           -D BUILD_TESTS=OFF \
           -D BUILD_PERF_TESTS=OFF \
           -D BUILD_opencv_python3=ON \
-          -D PYTHON_DEFAULT_EXECUTABLE=/opt/conda/bin/python \
-          -D PYTHON3_NUMPY_INCLUDE_DIRS=/opt/conda/lib/python3.8/site-packages/numpy/core/include \
-          -D PYTHON3_LIBRARIES=/opt/conda/lib/libpython3.8.so \
-          -D PYTHON3_INCLUDE_DIR=/opt/conda/include/python3.8 \
-          -D PYTHON3_EXECUTABLE=/opt/conda/bin/python \
-          -D PYTHON3_PACKAGES_PATH=/opt/conda/lib/python3.8/site-packages \
+#          -D PYTHON_DEFAULT_EXECUTABLE=/opt/conda/bin/python \
+#          -D PYTHON3_NUMPY_INCLUDE_DIRS=/opt/conda/lib/python3.8/site-packages/numpy/core/include \
+#          -D PYTHON3_LIBRARIES=/opt/conda/lib/libpython3.8.so \
+#          -D PYTHON3_INCLUDE_DIR=/opt/conda/include/python3.8 \
+#          -D PYTHON3_EXECUTABLE=/opt/conda/bin/python \
+#          -D PYTHON3_PACKAGES_PATH=/opt/conda/lib/python3.8/site-packages \
           .. && \
     make -j"$(nproc)" install && \
     python -c "import cv2; print(cv2.__version__)" && \
