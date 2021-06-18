@@ -79,8 +79,8 @@ ARG SOURCE_COMMIT=unspecified
 ENV SOURCE_COMMIT $SOURCE_COMMIT
 
 RUN apt-get update \
-      && apt-get install --no-install-recommends --no-install-suggests -y libopencv-highgui3.2 \
-      && rm -rf /var/lib/apt/lists/*
+      && apt-get install --no-install-recommends --no-install-suggests -y libopencv-highgui3.2 
+#      && rm -rf /var/lib/apt/lists/*
 
 # COPY --from=builder /usr/local/bin/darknet /usr/local/bin/darknet
 
